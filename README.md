@@ -16,8 +16,8 @@ This API comes handy in these cases: deploy the project to your favourite provid
 ```sh
 # install all the required deps
 ./cli init
+# check your files (done on pre-commit hook if you installed it)
+./cli lint
 # run this service locally - http://localhost:8000/docs will expose the OpenAPI documentation
 ./cli serve
-# export your dependencies - your provider will probably need them in the requirements.txt format
-./cli devcompile
 ```
