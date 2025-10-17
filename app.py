@@ -3,10 +3,13 @@ from datetime import timezone
 from typing import Optional
 
 from dateutil import parser as dtparser
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import PlainTextResponse
 
 from ics_normalizer import compute_etag, normalize_upstream_to_ics
+
+load_dotenv()
 
 
 class CalendarResponse(PlainTextResponse):
