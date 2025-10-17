@@ -1,15 +1,32 @@
+import os
 from datetime import timezone
 from typing import Optional
 
 from dateutil import parser as dtparser
 from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi.responses import PlainTextResponse
 
 from ics_normalizer import compute_etag, normalize_upstream_to_ics
 
-app = FastAPI(title="ICS Normalizer Service")
+
+class CalendarResponse(PlainTextResponse):
+    media_type = "text/calendar; charset=UTF-8"
 
 
-@app.get("/calendar.ics")
+# Disable OpenAPI docs unless environment is explicitly "dev"
+docs_url = "/docs" if os.getenv("ENVIRONMENT") == "dev" else None
+redoc_url = "/redoc" if os.getenv("ENVIRONMENT") == "dev" else None
+openapi_url = "/openapi.json" if os.getenv("ENVIRONMENT") == "dev" else None
+
+app = FastAPI(
+    title="ICS Normalizer Service",
+    docs_url=docs_url,
+    redoc_url=redoc_url,
+    openapi_url=openapi_url,
+)
+
+
+@app.get("/calendar.ics", response_class=CalendarResponse)
 async def calendar_ics(
     request: Request,
     source: str,
@@ -52,11 +69,10 @@ async def calendar_ics(
         return Response(status_code=304)
 
     headers = {
-        "Content-Type": "text/calendar; charset=UTF-8",
         "ETag": etag,
         "Cache-Control": "public, max-age=3600",
     }
-    return Response(content=ical_bytes, headers=headers)
+    return CalendarResponse(content=ical_bytes, headers=headers)
 
 
 @app.get("/")
