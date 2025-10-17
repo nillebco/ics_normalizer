@@ -1,0 +1,15 @@
+lint() {
+    uvx ruff check --fix
+    uvx ruff format
+}
+
+
+serve() {
+    uv run uvicorn app:app --reload --host 0.0.0.0 --port 8000
+}
+
+# execute the function corresponding to the first parameter passed to this script
+# passing all the remaining arguments
+
+COMMAND=$1
+$COMMAND ${@:2}

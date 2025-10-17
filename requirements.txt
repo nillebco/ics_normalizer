@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+requests
+python-dateutil
+icalendar
+recurring-ical-events
