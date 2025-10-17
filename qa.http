@@ -1,1 +1,4 @@
 GET http://localhost:8000/calendar.ics?source={{$dotenv CALENDAR_SOURCE}}&tz_strategy=utc
+
+###
+GET https://{{$dotenv PROD_HOSTNAME}}/calendar.ics?source={{$dotenv CALENDAR_SOURCE}}&tz_strategy=utc
