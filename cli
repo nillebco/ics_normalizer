@@ -5,10 +5,15 @@ init() {
 lint() {
     uvx ruff check --fix
     uvx ruff format
+    uvx ty check
 }
 
 serve() {
     uv run uvicorn app:app --reload --host 0.0.0.0 --port 8000
+}
+
+devcompile() {
+    uv export > requirements.txt
 }
 
 # execute the function corresponding to the first parameter passed to this script

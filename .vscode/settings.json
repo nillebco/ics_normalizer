@@ -1,0 +1,20 @@
+{
+    "python.defaultInterpreterPath": "./.venv/bin/python",
+    "python.formatting.provider": "none",
+    "python.linting.enabled": true,
+    "python.linting.ruffEnabled": true,
+    "python.linting.ruffPath": "./.venv/bin/ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.ruff": "explicit",
+        "source.organizeImports.ruff": "explicit"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": "explicit",
+            "source.organizeImports.ruff": "explicit"
+        }
+    }
+}

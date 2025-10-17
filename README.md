@@ -18,4 +18,6 @@ This API comes handy in these cases: deploy the project to your favourite provid
 ./cli init
 # run this service locally - http://localhost:8000/docs will expose the OpenAPI documentation
 ./cli serve
+# export your dependencies - your provider will probably need them in the requirements.txt format
+./cli devcompile
 ```
