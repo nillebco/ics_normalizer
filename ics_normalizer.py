@@ -154,7 +154,6 @@ def events_to_ics(
     for e in events_sorted:
         ve = Event()
         # Fixed property add order for determinism
-        ve.add("uid", e.get("uid") or None)
         ve.add("summary", e.get("summary") or "")
 
         if e.get("location"):
@@ -180,6 +179,16 @@ def events_to_ics(
                 end_dt = end_dt.astimezone(target_tz)
 
         all_day = bool(e.get("all_day"))
+
+        # Unique UID per occurrence. We flatten recurring events into standalone
+        # instances (no RRULE), so every occurrence would otherwise carry the
+        # source event's single UID. Per RFC 5545, same UID + no RECURRENCE-ID =
+        # one event, so Google Calendar collapses them to a single occurrence.
+        # Appending the occurrence start keeps each instance distinct.
+        base_uid = e.get("uid") or ""
+        if base_uid:
+            ve.add("uid", f"{base_uid}-{start_dt.strftime('%Y%m%dT%H%M%SZ')}")
+
         start_val = _dt_for_strategy(start_dt, all_day, tz_strategy)
         end_val = _dt_for_strategy(end_dt or start_dt, all_day, tz_strategy)
 
